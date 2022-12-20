@@ -1,7 +1,7 @@
 <script setup>
 import {reactive, ref} from 'vue'
 import {Greet} from '../../wailsjs/go/main/App'
-import {ConnectionList} from '../../wailsjs/go/main/App'
+import {ConnectionList, ConnectionCreate} from '../../wailsjs/go/main/App'
 
 const data = reactive({
   name: "",
@@ -10,18 +10,21 @@ const data = reactive({
 
 let code = ref()
 let list = ref()
+let CreateRes = ref()
 
 function greet() {
-  Greet(data.name).then(result => {
-    data.resultText = result
+  ConnectionCreate({"addr":"localshot"}).then(result => {
+    CreateRes.value = result
   })
-}
 
-function connectionList() {
   ConnectionList().then(result => {
     code.value = result.code
     list.value = result.data
   })
+}
+
+function connectionList() {
+
 }
 
 </script>
@@ -31,9 +34,10 @@ function connectionList() {
     <div id="result" class="result">{{ data.resultText }}</div>
     <div id="input" class="input-box">
       <input id="name" v-model="data.name" autocomplete="off" class="input" type="text"/>
-      <button class="btn" @click="connectionList">Greet</button>
+      <button class="btn" @click="greet">Greet</button>
       <div>code:{{code}}</div>
       <div>list:{{list}}</div>
+      <div>CreateRes:{{CreateRes}}</div>
     </div>
   </main>
 </template>
