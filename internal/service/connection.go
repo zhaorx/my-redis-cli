@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 
+	"github.com/google/uuid"
 	"github.com/tidwall/gjson"
 	"my-redis-cli/internal/define"
 )
@@ -37,6 +38,9 @@ func ConnectionCreate(conn *define.Connection) error {
 		conn.Name = "6379"
 	}
 
+	_uuid, _ := uuid.NewUUID()
+	conn.Identity = _uuid.String()
+
 	conf := new(define.Config)
 	nowPath, _ := os.Getwd()
 	bytes, err := os.ReadFile(nowPath + string(os.PathSeparator) + define.ConfigName)
@@ -47,11 +51,15 @@ func ConnectionCreate(conn *define.Connection) error {
 		bytes, _ = json.Marshal(conf)
 		os.MkdirAll(nowPath, 0666)
 		os.WriteFile(nowPath+string(os.PathSeparator)+define.ConfigName, bytes, 0666)
+
+		return nil
 	}
+
 	// 存在配置文件 则追加conn
 	json.Unmarshal(bytes, conf)
 	conf.Connections = append(conf.Connections, conn)
 	bytes, _ = json.Marshal(conf)
 	os.WriteFile(nowPath+string(os.PathSeparator)+define.ConfigName, bytes, 0666)
+
 	return nil
 }
