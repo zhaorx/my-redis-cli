@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/google/uuid"
-	"github.com/tidwall/gjson"
 	"my-redis-cli/internal/define"
 )
 
@@ -18,12 +17,13 @@ func ConnectionList() ([]*define.Connection, error) {
 		return nil, err
 	}
 
-	config, ok := gjson.Parse(string(bytes)).Value().(define.Config)
-	if !ok {
-		return nil, errors.New("json parse to config error")
+	conf := new(define.Config)
+	err = json.Unmarshal(bytes, conf)
+	if err != nil {
+		return nil, errors.New("json parse to config error：" + err.Error())
 	}
 
-	return config.Connections, nil
+	return conf.Connections, nil
 }
 
 // ConnectionCreate 创建链接

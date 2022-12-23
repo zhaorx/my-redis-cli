@@ -13,7 +13,7 @@ let list = ref()
 let CreateRes = ref()
 
 function greet() {
-  ConnectionCreate({"addr":"localshot"}).then(result => {
+  ConnectionCreate({"addr":"localhost"}).then(result => {
     CreateRes.value = result
   })
 
