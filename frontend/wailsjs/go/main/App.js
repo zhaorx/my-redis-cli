@@ -6,6 +6,14 @@ export function ConnectionCreate(arg1) {
   return window['go']['main']['App']['ConnectionCreate'](arg1);
 }
 
+export function ConnectionDelete(arg1) {
+  return window['go']['main']['App']['ConnectionDelete'](arg1);
+}
+
+export function ConnectionEdit(arg1) {
+  return window['go']['main']['App']['ConnectionEdit'](arg1);
+}
+
 export function ConnectionList() {
   return window['go']['main']['App']['ConnectionList']();
 }

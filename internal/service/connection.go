@@ -98,3 +98,30 @@ func ConnectionEdit(conn *define.Connection) error {
 
 	return nil
 }
+
+// ConnectionDelete 编辑链接
+func ConnectionDelete(identity string) error {
+	if identity == "" {
+		return errors.New("连接唯一标识不能为空")
+	}
+
+	conf := new(define.Config)
+	nowPath, _ := os.Getwd()
+	bytes, err := os.ReadFile(nowPath + string(os.PathSeparator) + define.ConfigName)
+	if err != nil {
+		return err
+	}
+
+	json.Unmarshal(bytes, conf)
+	for i, v := range conf.Connections {
+		if v.Identity == identity {
+			conf.Connections = append(conf.Connections[:i], conf.Connections[i+1:]...)
+			break
+		}
+	}
+
+	bytes, _ = json.Marshal(conf)
+	os.WriteFile(nowPath+string(os.PathSeparator)+define.ConfigName, bytes, 0666)
+
+	return nil
+}

@@ -76,3 +76,18 @@ func (a *App) ConnectionEdit(conn *define.Connection) H {
 		"msg":  "修改成功",
 	}
 }
+
+// ConnectionDelete 删除连接
+func (a *App) ConnectionDelete(identity string) H {
+	err := service.ConnectionDelete(identity)
+	if err != nil {
+		return M{
+			"code": -1,
+			"msg":  "Error: " + err.Error(),
+		}
+	}
+	return M{
+		"code": 200,
+		"msg":  "修改成功",
+	}
+}
