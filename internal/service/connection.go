@@ -63,3 +63,38 @@ func ConnectionCreate(conn *define.Connection) error {
 
 	return nil
 }
+
+// ConnectionEdit 编辑链接
+func ConnectionEdit(conn *define.Connection) error {
+	if conn.Identity == "" {
+		return errors.New("连接唯一标识不能为空")
+	}
+	if conn.Addr == "" {
+		return errors.New("连接地址不能为空")
+	}
+	if conn.Name == "" {
+		conn.Name = conn.Addr
+	}
+	if conn.Port == "" {
+		conn.Name = "6379"
+	}
+
+	conf := new(define.Config)
+	nowPath, _ := os.Getwd()
+	bytes, err := os.ReadFile(nowPath + string(os.PathSeparator) + define.ConfigName)
+	if err != nil {
+		return err
+	}
+
+	json.Unmarshal(bytes, conf)
+	for i, v := range conf.Connections {
+		if v.Identity == conn.Identity {
+			conf.Connections[i] = conn
+		}
+	}
+
+	bytes, _ = json.Marshal(conf)
+	os.WriteFile(nowPath+string(os.PathSeparator)+define.ConfigName, bytes, 0666)
+
+	return nil
+}
