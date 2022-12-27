@@ -14,22 +14,30 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {ConnectionList} from "../../wailsjs/go/main/App.js";
 import {ElNotification} from 'element-plus'
 
+let flush = defineProps(['flush'])
+watch(flush, (val) => {
+  connectionList()
+})
+
 let list = ref()
 
-ConnectionList().then(result => {
-  if (result.code !== 200) {
-    ElNotification({
-      title: result.msg,
-      type: 'error'
-    })
-  }
+function connectionList() {
+  ConnectionList().then(result => {
+    if (result.code !== 200) {
+      ElNotification({
+        title: result.msg,
+        type: 'error'
+      })
+    }
+    list.value = result.data
+  })
+}
 
-  list.value = result.data
-})
+connectionList()
 
 
 </script>
