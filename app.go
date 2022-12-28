@@ -88,6 +88,6 @@ func (a *App) ConnectionDelete(identity string) H {
 	}
 	return M{
 		"code": 200,
-		"msg":  "修改成功",
+		"msg":  "删除成功",
 	}
 }

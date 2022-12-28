@@ -6,8 +6,15 @@
           <template #title>
 
             <div class="item">
-              <span>{{ item.addr }}</span>
-              <span><ConnectionManage :data="item" title="编辑" btn-type="text" @click.stop/></span>
+              <div>{{ item.addr }}</div>
+              <div style="display: flex">
+                <ConnectionManage :data="item" title="编辑" btn-type="text" @click.stop/>
+                <el-popconfirm title="确认删除？" @confirm="connectionDelete(item.identity)" confirm-button-text="是" cancel-button-text="否">
+                  <template #reference>
+                    <el-button link type=danger @click.stop>删除</el-button>
+                  </template>
+                </el-popconfirm>
+              </div>
             </div>
 
           </template>
@@ -20,7 +27,7 @@
 
 <script setup>
 import {ref, watch} from "vue";
-import {ConnectionList} from "../../wailsjs/go/main/App.js";
+import {ConnectionDelete, ConnectionList} from "../../wailsjs/go/main/App.js";
 import {ElNotification} from 'element-plus'
 import ConnectionManage from "./ConnectionManage.vue";
 
@@ -40,6 +47,26 @@ function connectionList() {
       })
     }
     list.value = result.data
+  })
+}
+
+function connectionDelete(identity) {
+  ConnectionDelete(identity).then(result => {
+    if (result.code !== 200) {
+      ElNotification({
+        title: result.msg,
+        type: 'error'
+      })
+
+      return
+    }
+
+    ElNotification({
+      title: result.msg,
+      type: 'success'
+    })
+
+    connectionList()
   })
 }
 

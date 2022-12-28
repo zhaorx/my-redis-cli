@@ -17,7 +17,7 @@
           <el-input v-model="form.password" placeholder="请输入密码"/>
         </el-form-item>
 
-        <el-form-item label="密码">
+        <el-form-item>
           <el-button @click="editConnection" v-if="data">编辑</el-button>
           <el-button @click="createConnection" v-else>创建</el-button>
           <el-button @click="dialogVisible = false">取消</el-button>
