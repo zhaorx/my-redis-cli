@@ -91,3 +91,20 @@ func (a *App) ConnectionDelete(identity string) H {
 		"msg":  "删除成功",
 	}
 }
+
+// DbList 连接列表
+func (a *App) DbList(identity string) H {
+	dbs, err := service.DbList(identity)
+	if err != nil {
+		return M{
+			"code": -1,
+			"msg":  "Error: " + err.Error(),
+		}
+	}
+
+	return M{
+		"code": 200,
+		"msg":  "success",
+		"data": dbs,
+	}
+}

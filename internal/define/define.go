@@ -11,4 +11,11 @@ type Connection struct {
 	Name     string `json:"name"`
 	Addr     string `json:"addr"`
 	Port     string `json:"port"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type DbItem struct {
+	Key    string `json:"key"`    // db0 db1
+	Number int    `json:"number"` // 键数量
 }

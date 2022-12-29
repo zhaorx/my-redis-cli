@@ -4,11 +4,14 @@
 
     <el-dialog v-model="dialogVisible" :title="title" width="60%">
       <el-form :model="form" label-width="120px">
+        <el-form-item label="连接名称">
+          <el-input v-model="form.name" placeholder="请输入连接名称"/>
+        </el-form-item>
         <el-form-item label="连接地址">
           <el-input v-model="form.addr" placeholder="请输入连接地址"/>
         </el-form-item>
-        <el-form-item label="连接名称">
-          <el-input v-model="form.name" placeholder="请输入连接名称"/>
+        <el-form-item label="端口">
+          <el-input v-model="form.port" placeholder="请输入端口号"/>
         </el-form-item>
         <el-form-item label="用户名">
           <el-input v-model="form.username" placeholder="请输入用户名"/>
@@ -38,6 +41,7 @@ let dialogVisible = ref(false)
 let form = reactive({
   name: '',
   addr: '',
+  port: '',
   username: '',
   password: ''
 })

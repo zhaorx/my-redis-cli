@@ -5,6 +5,8 @@ export namespace define {
 	    name: string;
 	    addr: string;
 	    port: string;
+	    username: string;
+	    password: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Connection(source);
@@ -16,6 +18,8 @@ export namespace define {
 	        this.name = source["name"];
 	        this.addr = source["addr"];
 	        this.port = source["port"];
+	        this.username = source["username"];
+	        this.password = source["password"];
 	    }
 	}
 
