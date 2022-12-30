@@ -50,6 +50,7 @@ if (props.data) {
   form = props.data
 }
 
+// 创建连接
 function createConnection() {
   ConnectionCreate(form).then(result => {
     if (result.code !== 200) {
@@ -73,6 +74,7 @@ function createConnection() {
   })
 }
 
+// 编辑连接
 function editConnection() {
   ConnectionEdit(form).then(result => {
     if (result.code !== 200) {
