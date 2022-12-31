@@ -2,12 +2,26 @@
 import ConnectionList from './components/ConnectionList.vue'
 import ConnectionManage from "./components/ConnectionManage.vue";
 import {ref} from "vue";
+import {KeyList} from "../wailsjs/go/main/App.js";
 
 let flushFlag = ref(true)
 
 function flushConnectionList() {
   flushFlag.value = !flushFlag.value
 }
+
+// 获取基本信息
+function test() {
+  // 获取数据库列表
+  KeyList({
+    conn_identity: "87e1b075-8787-11ed-a178-00ffaabbccdd",
+    db: 0
+  }).then((result) => {
+    console.log('result', result)
+  })
+}
+
+test()
 
 </script>
 
