@@ -7,7 +7,10 @@
       <ConnectionList :flush="flushFlag" @emit-select-db="selectDB"></ConnectionList>
     </el-col>
     <el-col :span="7" style="padding:12px">
-      <Keys :keyDB="keyDB" :keyConnIdentity="keyConnIdentity"/>
+      <Keys :keyDB="keyDB" :keyConnIdentity="keyConnIdentity" @emit-select-key="selectKey"/>
+    </el-col>
+    <el-col :span="12" style="padding:12px">
+      <KeyValue :keyDB="keyDB" :keyConnIdentity="keyConnIdentity" :keyKey="keyKey" />
     </el-col>
   </el-row>
 </template>
@@ -18,9 +21,11 @@ import ConnectionManage from "./components/ConnectionManage.vue";
 import {ref} from "vue";
 import {KeyList} from "../wailsjs/go/main/App.js";
 import Keys from "./components/Keys.vue";
+import KeyValue from "./components/KeyValue.vue";
 
 let flushFlag = ref(true)
 let keyDB = ref()
+let keyKey = ref()
 let keyConnIdentity = ref()
 
 function flushConnectionList() {
@@ -31,6 +36,14 @@ function flushConnectionList() {
 function selectDB(db, connIdentity) {
   keyDB.value = db
   keyConnIdentity.value = connIdentity
+}
+// 选中key
+function selectKey(key) {
+  keyKey.value = key
+}
+
+function GetKeyValue(){
+
 }
 
 // 获取基本信息

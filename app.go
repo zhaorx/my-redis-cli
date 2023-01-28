@@ -132,3 +132,35 @@ func (a *App) KeyList(req define.KeyListRequest) H {
 		"data": data,
 	}
 }
+
+func (a *App) GetKeyValue(req define.KeyValueRequest) H {
+	if req.ConnIdentity == "" {
+		return M{
+			"code": -1,
+			"msg":  "Error: 连接唯一标识不能为空",
+		}
+
+	}
+
+	if req.Key == "" {
+		return M{
+			"code": -1,
+			"msg":  "Error: 键不能为空",
+		}
+
+	}
+
+	data, err := service.GetKeyValue(req)
+	if err != nil {
+		return M{
+			"code": -1,
+			"msg":  "Error: " + err.Error(),
+		}
+	}
+
+	return M{
+		"code": 200,
+		"msg":  "success",
+		"data": data,
+	}
+}

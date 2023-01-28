@@ -8,8 +8,11 @@
         <el-button type="primary" @click="getKeyList">查询</el-button>
       </el-form-item>
     </el-form>
+    <div v-for="item in keys" @click="selectKeyKey(item)">
+      <div v-if="item === selectKey" class="my-item">{{ item }}</div>
+      <div v-else class="my-select-item">{{ item }}</div>
+    </div>
 
-    <div v-for="item in keys" class="my-item">{{ item }}</div>
   </main>
 </template>
 
@@ -19,7 +22,9 @@ import {KeyList} from "../../wailsjs/go/main/App.js";
 import {ElNotification} from "element-plus";
 
 let props = defineProps(['keyDB', 'keyConnIdentity'])
+let emits = defineEmits(['emit-select-key'])
 let keys = ref()
+let selectKey = ref()
 
 const form = reactive({
   keyword: '',
@@ -46,6 +51,11 @@ function getKeyList() {
 
     keys.value = res.data
   })
+}
+
+function selectKeyKey(key) {
+  selectKey.value = key
+  emits("emit-select-key",key)
 }
 </script>
 
